@@ -1,0 +1,32 @@
+Manifest-Version: 1.0
+Class-Path: classmate-1.3.4.jar spring-orm-5.0.6.RELEASE.jar spring-co
+ ntext-5.0.6.RELEASE.jar javassist-3.22.0-GA.jar spring-core-5.0.6.REL
+ EASE.jar spring-boot-2.0.2.RELEASE.jar spring-aspects-5.0.6.RELEASE.j
+ ar spring-data-commons-2.0.7.RELEASE.jar spring-beans-5.0.6.RELEASE.j
+ ar spring-boot-starter-2.0.2.RELEASE.jar jackson-core-2.9.5.jar jul-t
+ o-slf4j-1.7.25.jar jackson-datatype-jsr310-2.9.5.jar hibernate-common
+ s-annotations-5.0.1.Final.jar tomcat-embed-core-8.5.31.jar javax.anno
+ tation-api-1.3.2.jar tomcat-embed-websocket-8.5.31.jar slf4j-api-1.7.
+ 25.jar antlr-2.7.7.jar snakeyaml-1.19.jar attoparser-2.0.4.RELEASE.ja
+ r spring-jdbc-5.0.6.RELEASE.jar unbescape-1.1.5.RELEASE.jar spring-jc
+ l-5.0.6.RELEASE.jar spring-boot-starter-tomcat-2.0.2.RELEASE.jar spri
+ ng-expression-5.0.6.RELEASE.jar javax.transaction-api-1.2.jar jandex-
+ 2.0.3.Final.jar log4j-api-2.10.0.jar mysql-connector-java-5.1.46.jar 
+ hibernate-jpa-2.1-api-1.0.0.Final.jar spring-boot-starter-thymeleaf-2
+ .0.2.RELEASE.jar spring-webmvc-5.0.6.RELEASE.jar log4j-to-slf4j-2.10.
+ 0.jar spring-web-5.0.6.RELEASE.jar logback-classic-1.2.3.jar aspectjw
+ eaver-1.8.13.jar jackson-module-parameter-names-2.9.5.jar hibernate-c
+ ore-5.2.17.Final.jar HikariCP-2.7.9.jar thymeleaf-3.0.9.RELEASE.jar s
+ pring-aop-5.0.6.RELEASE.jar thymeleaf-extras-java8time-3.0.1.RELEASE.
+ jar logback-core-1.2.3.jar jackson-datatype-jdk8-2.9.5.jar dom4j-1.6.
+ 1.jar validation-api-2.0.1.Final.jar spring-boot-autoconfigure-2.0.2.
+ RELEASE.jar jboss-logging-3.3.2.Final.jar tomcat-embed-el-8.5.31.jar 
+ spring-boot-starter-web-2.0.2.RELEASE.jar hibernate-validator-6.0.9.F
+ inal.jar spring-data-jpa-2.0.7.RELEASE.jar spring-boot-starter-data-j
+ pa-2.0.2.RELEASE.jar jackson-annotations-2.9.0.jar jackson-databind-2
+ .9.5.jar spring-boot-starter-json-2.0.2.RELEASE.jar spring-boot-start
+ er-aop-2.0.2.RELEASE.jar thymeleaf-spring5-3.0.9.RELEASE.jar spring-t
+ x-5.0.6.RELEASE.jar spring-boot-starter-jdbc-2.0.2.RELEASE.jar spring
+ -boot-starter-logging-2.0.2.RELEASE.jar
+Main-Class: 
+

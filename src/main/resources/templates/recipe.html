@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>住院信息管理</title>
+    <link rel="stylesheet" href="/sql/layui/css/layui.css">
+
+    <style>
+
+        .layui-layout-admin .layui-body{
+            margin-left: 60px;
+            margin-top: 0px;
+            margin-right: 60px;
+        }
+
+        .layui-input:hover, .layui-textarea:hover {
+            border-color: #5534ff !important;
+        }
+
+        .layui-edge{
+            margin-right: -100%;
+        }
+
+        .layui-table-cell {
+            height: 40px;
+            line-height: 40px;
+        }
+
+    </style>
+
+</head>
+<body class="layui-layout-body">
+
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">住院信息</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <!--暂时不做登录注册等功能-->
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item"><a href="/sql/usermsg/index">患者入院操作</a></li>
+                <li class="layui-nav-item"><a href="/sql/check/check">患者检查项</a></li>
+                <li class="layui-nav-item"><a href="/sql/recipe/recipe">患者处方</a></li>
+                <li class="layui-nav-item"><a href="/sql/bill/bill">患者费用清单</a></li>
+                <li class="layui-nav-item"><a href="/sql/out/out">患者出院</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+            <legend>患者添加处方</legend>
+        </fieldset>
+        <div class="demoTable" style="margin-top: 20px; margin-left: 200px">
+            搜索患者：
+            <div class="layui-inline">
+                <input class="layui-input" name="username" id="userselect" autocomplete="off">
+            </div>
+            <button class="layui-btn layui-btn-normal" data-type="reload">搜索</button>
+        </div>
+
+        <table class="layui-table" lay-data="{url:'/sql/recipe/recipelist', page:true, id:'userlist'}" lay-filter="demo">
+            <thead>
+            <tr>
+                <th lay-data="{field:'userid', sort: true, fixed: true}">ID</th>
+                <th lay-data="{field:'username' }">姓名</th>
+                <th lay-data="{field:'usersex' }">性别</th>
+                <th lay-data="{field:'userage' }">年龄</th>
+                <th lay-data="{field:'useraddress'}">家庭地址</th>
+                <th lay-data="{field:'userphone'}">联系方式</th>
+                <th lay-data="{field:'bedid'}">病床号</th>
+                <th lay-data="{field:'recipecontext'}">处方</th>
+                <th lay-data="{align:'center', toolbar: '#barDemo'}">操作</th>
+            </tr>
+            </thead>
+        </table>
+
+
+
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-radius layui-btn-primary" lay-event="detail">添加处方</a>
+        </script>
+
+
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © com.coursedesign.sql - 住院信息管理
+    </div>
+</div>
+<script src="/sql/layui/layui.js"></script>
+<script src="/sql/layui/jquery.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'laydate', 'table', 'form'], function(){
+        var element = layui.element,
+            table = layui.table,
+            form = layui.form,
+            laydata = layui.laydate;
+
+        //监听工具条
+        table.on('tool(demo)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'detail') {
+                layer.prompt({
+                    formType: 2
+                    ,title: '添加 ['+ data.username +'] 患者的处方'
+                    ,value: data.recipecontext
+                }, function(value, index){
+                    layer.close(index);
+
+                    $.ajax({
+                       url: '/sql/recipe/addrecipe',
+                        type: 'post',
+                        data: {'context':value, 'userid':data.userid},
+                        dataType: 'text',
+                        async:false,
+                        success:function (res) {
+                            //返回数据处理
+                            var jsondata = $.parseJSON(res);
+                            var statuscode_jsondata = jsondata.code;
+                            var statu_jsondata = jsondata.status;
+                            switch (statuscode_jsondata){
+                                case '20000':
+                                    //同步更新表格和缓存对应的值
+                                    obj.update({
+                                        recipecontext: value
+                                    });
+                                    window.location.reload();
+                                    break;
+                                case '20001':
+                                    layer.msg(statu_jsondata);
+                                    break;
+                            }
+                        }
+                    });
+
+                });
+            }
+
+
+        });
+
+        /**
+         * 执行重载
+         */
+        var $ = layui.$, active = {
+
+            reload: function () {
+                var userSelect = $('#userselect');
+
+                table.reload('userlist', {
+                    url: '/sql/recipe/searchrecipe',
+                    where: {
+                        username: userSelect.val()
+                    }
+                });
+            }
+        };
+
+
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+</script>
+</body>
+</html>

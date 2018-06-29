@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>登陆</title>
+    <meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="/sql/css/crowd.css">
+    <link rel="stylesheet" type="text/css" href="/sql/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/sql/css/login.css">
+</head>
+<body>
+<header>
+        <div class="bg">
+            <canvas id="display"></canvas>
+            <div id="blachole"></div>
+            <div class="content content-login">
+                <h3 class="title">欢迎登陆住院信息管理系统</h3>
+                <div class="form">
+                    <form action="/sql/login/login">
+                        <div class="form-control">
+                            <label for="username" class="normal"><i class="fa fa-user fa-lg"></i></label>
+                            <input type="text" name="username" id="username" required placeholder="请输入3-15位用户名">
+                        </div>
+                        <div class="form-control">
+                            <label for="password" class="normal"><i class="fa fa-lock fa-lg"></i></label>
+                            <input type="password" name="password" id="password" required placeholder="请输入3-15位密码">
+                        </div>
+                        <input type="submit" class="btn" value="登录">
+                        <button class="btn" id="register">注册</button>
+                    </form>
+                </div>
+            </div>
+            <div class="content content-register">
+                <h3 class="title">注册界面</h3>
+                <div class="form">
+                    <form action="/sql/login/register">
+                        <div class="form-control">
+                            <label for="r-username" class="normal"><i class="fa fa-user fa-lg"></i></label>
+                            <input type="text" name="username" id="r-username" required placeholder="请输入3-15位用户名">
+                        </div>
+                        <div class="form-control">
+                            <label for="r-password" class="normal"><i class="fa fa-lock fa-lg"></i></label>
+                            <input type="password" name="password" id="r-password" required placeholder="请输入3-15位密码">
+                        </div>
+                        <input type="submit" class="btn" value="注册">
+                        <button class="btn" id="login">登陆</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </header>
+    <script src="/sql/js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="/sql/js/constellation.js"></script>
+    <script src="/sql/js/button.js"></script>
+</body>
+</html>

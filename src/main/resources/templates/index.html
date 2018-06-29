@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>住院信息管理</title>
+    <link rel="stylesheet" href="/sql/layui/css/layui.css">
+
+    <style>
+
+        .layui-layout-admin .layui-body{
+            margin-left: 60px;
+            margin-top: 0px;
+        }
+
+        .layui-input:hover, .layui-textarea:hover {
+            border-color: #5534ff !important;
+        }
+
+        .layui-input{
+            width: 200%;
+        }
+
+        .layui-edge{
+            margin-right: -100%;
+        }
+
+    </style>
+
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">住院信息</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <!--暂时不做登录注册等功能-->
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item"><a href="/sql/usermsg/index">患者入院操作</a></li>
+                <li class="layui-nav-item"><a href="/sql/check/check">患者检查项</a></li>
+                <li class="layui-nav-item"><a href="/sql/recipe/recipe">患者处方</a></li>
+                <li class="layui-nav-item"><a href="/sql/bill/bill">患者费用清单</a></li>
+                <li class="layui-nav-item"><a href="/sql/out/out">患者出院</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+            <legend>患者信息记录</legend>
+        </fieldset>
+
+        <form class="layui-form layui-form-pane" action="">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">姓名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="usersex" value="男" title="男" checked>
+                    <input type="radio" name="usersex" value="女" title="女">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">年龄</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userage" lay-verify="required|number" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">联系方式</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userphone" lay-verify="required|phone" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">家庭住址</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="useraddress" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <label class="layui-form-label">选择病房</label>
+                    <div class="layui-input-block">
+                        <select name="searchbedid" lay-filter="bedid" id="selectbed">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <label class="layui-form-label">选择医师</label>
+                    <div class="layui-input-block">
+                        <select name="searchdoctorid" lay-filter="doctorid" id="selectdoctor">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">入院日期</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="date" id="dateselect" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <button class="layui-btn" lay-submit="" lay-filter="add">保存信息并入院</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © com.coursedesign.sql - 住院信息管理
+    </div>
+</div>
+<script src="/sql/layui/layui.js"></script>
+<script src="/sql/layui/jquery.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'laydate', 'form'], function(){
+        var element = layui.element,
+            laydata = layui.laydate,
+            form = layui.form;
+
+        //日期选择
+        laydata.render({
+            elem: '#dateselect'
+        });
+
+        /*
+        添加可用床号
+         */
+        $.ajax({
+            url: '/sql/usermsg/findemptybed',
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    $('#selectbed').append(new Option(item.bedid, item.bedid));
+                })
+                form.render();
+            }
+        });
+
+        /*
+        添加医师
+         */
+        $.ajax({
+            url: '/sql/usermsg/findalldoctor',
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    $('#selectdoctor').append(new Option(item.doctorname, item.doctorid));
+                })
+                form.render();
+            }
+        });
+
+        /*
+        监听表单提交
+         */
+        form.on('submit(add)', function(data){
+            /*layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            });*/
+
+            $.ajax({
+                url: '/sql/usermsg/adduser',
+                type: 'post',
+                dataType: 'text',
+                data: data.field,
+                async: false,
+                success: function (res) {
+                    var json = $.parseJSON(res);
+                    var code = json.code;
+                    var status = json.status;
+                    switch (code){
+                        case '200':
+                            layer.alert(status, {
+                                title: '添加结果',
+                                yes: function () {
+                                    window.location.reload();
+                                }
+                            });
+                            break;
+                        case '400':
+                            layer.msg(status);
+                            break;
+                    }
+                }
+            });
+
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>
